@@ -1,0 +1,130 @@
+{
+  "manifest_version": 1,
+  "script": "camcomrade.js",
+  "config": {
+    "groups": [
+      {
+        "name": "Connection",
+        "options": [
+          {
+            "id": "tw_usn",
+            "type": "string",
+            "label": "Twitter account username:"
+          },
+          {
+            "id": "tw_pass",
+            "type": "password",
+            "label": "Twitter account password"
+          },
+          {
+            "id": "tw_post",
+            "type": "boolean",
+            "label": "Post alerts to Twitter stream?",
+            "default": false
+          },
+          {
+            "id": "chat_chan",
+            "type": "string",
+            "label": "Chat channel:"
+          },
+          {
+            "id": "chat_pass",
+            "type": "password",
+            "label": "Chat chanel password:"
+          }
+        ]
+      },
+      {
+        "name": "Options",
+        "options": [
+          {
+            "id": "screen_x",
+            "type": "integer",
+            "label": "Simulated screen width in pixels: (WARNING: VALUES OTHER THAN 1280 px MAY BE UNSTABLE)",
+            "default": 1280
+          },
+          {
+            "id": "screen_y",
+            "type": "integer",
+            "label": "Simulated screen height in pixels: (WARNING: VALUES OTHER THAN 720 px MAY BE UNSTABLE)",
+            "default": 720
+          },
+          {
+            "id": "take_names",
+            "type": "boolean",
+            "label": "Detect and broadcast names of enemy agents?",
+            "default": false
+          },
+          {
+            "id": "take_pics",
+            "type": "choice",
+            "label": "Retain screenshots when enemy detected?",
+            "default": "pics_nope",
+            "choices": {
+              "Do not keep images": "pics_nope",
+              "Retain images where needle?haystack yields matches": "pics_match",
+              "Retain matched images and highlight matches for later analysis": "pics_mark"
+            }
+          },
+          {
+            "id": "time_format",
+            "type": "choice",
+            "label": "Label saved snapshots with UTC or local timezone if applicable",
+            "default": "loc",
+            "choices": {
+              "Local timezone labeling": "loc",
+              "UTC timezone labeling": "UTC"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Advanced",
+        "options": [
+          {
+            "id": "debug_do",
+            "type": "choice",
+            "label": "Capture a text log detailing the bot's internal workings?",
+            "default": "dbg_nope",
+            "choices": {
+              "No logging": "dbg_nope",
+              "Error logging": "dbg_err",
+              "Full logging": "dbg_full"
+            }
+          },
+          {
+            "id": "tick",
+            "type": "integer",
+            "label": "Interval in milliseconds between succesive scans:",
+            "default": 2000
+          },
+          {
+            "id": "package",
+            "type": "string",
+            "label": "Package name:",
+            "default": "com.netease.eve.en"
+          },
+          {
+            "id": "rect_clr",
+            "type": "choice",
+            "label": "Color for match highlights on saved images (if applicable):",
+            "default": "magenta",
+            "choices": {
+              "Green": "green",
+              "Cyan": "cyan",
+              "Yellow": "yellow",
+              "Red": "red",
+              "Magenta": "magenta"
+            }
+          },
+          {
+           "id": "rect_px",
+            "type": "integer",
+            "label": "Line thickness for match highlighting (if applicable)",
+            "default": 2
+          }
+        ]
+      }
+    ]
+  }
+}

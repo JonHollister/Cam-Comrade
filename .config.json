@@ -1,0 +1,17 @@
+{
+    "chat_chan": "Provi Squawkbox",
+    "chat_pass": "8pussy43hours",
+    "debug_do": "dbg_full",
+    "package": "com.netease.eve.en",
+    "rect_clr": "magenta",
+    "rect_px": 2,
+    "screen_x": 1280,
+    "screen_y": 720,
+    "take_names": false,
+    "take_pics": "pics_nope",
+    "tick": 2000,
+    "time_format": "loc",
+    "tw_pass": null,
+    "tw_post": false,
+    "tw_usn": null
+}
