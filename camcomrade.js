@@ -18,17 +18,49 @@ const assets = {
         limit: 1
     }
  }
+ 
+class Asset {
+    constructor(ref_in, score_in, alpha_in, limit_in) {
+        this.ref =  path(ref_in);
+        this.mask = alpha_in ? alpha_in : null;
+        this.score = score_in;
+    }
+}
+ 
+/*const assets = Array.of(
+    ud: {
+        asset: path("ud"),
+        
+        }*/
 
-const tw = {usn: Config.getValue("tw_usn"), pass: Config.getValue("tw_pass"), post: Config.getValue("tw_post")};
-const chat = {chan: Config.getValue("chat_chan"), pass: Config.getValue("chat_pass")};
-const scrn = {x: Config.getValue("screen_x"), y: Config.getValue("screen_y"), rect_color: Config.getValue("rect_clr"), rect_pix: Config.getValue("rect_px")};
-const adv = {dbg: Config.getValue("debug_do"), tick: Config.getValue("tick"), pak: Config.getValue("package"), take_names: Config.getValue("take_names"), take_pics: Config.getValue("take_pics")};
+const tw = {
+    usn: Config.getValue("tw_usn"), 
+    pass: Config.getValue("tw_pass"), 
+    post: Config.getValue("tw_post")
+};
+const chat = {
+    chan: Config.getValue("chat_chan"), 
+    pass: Config.getValue("chat_pass")
+};
+const scrn = {
+    x: Config.getValue("screen_x"), 
+    y: Config.getValue("screen_y"), 
+    rect_color: Config.getValue("rect_clr"), 
+    rect_pix: Config.getValue("rect_px")
+};
+const adv = {
+    dbg: Config.getValue("debug_do"), 
+    tick: Config.getValue("tick"), 
+    pak: Config.getValue("package"), 
+    take_names: Config.getValue("take_names"), 
+    take_pics: Config.getValue("take_pics")
+};
 
 if (Android.connected()) {
     Helper.log("Emulator connected!");
-    Helper.msleep(2000);
+    Helper.sleep(2);
     Helper.log("Searching for game package...");
-    Helper.msleep(1000);
+    Helper.sleep(1);
     if (Android.startApp(adv.pak)) {
         Helper.log("Game package found! Initializing surveillance system...");
         main();
@@ -40,32 +72,54 @@ if (Android.connected()) {
     Helper.log("Waiting for emulator connection...");
 }
 
-
+function main() {
+    while (state == "active") {
+        var mt = scan(assets);
+        Helper.msleep(2000);
+    }
+}
 
 
 function scan(targets) {
     let haystack = Android.takeScreenshot();
-    let signals = [];
-    let states = []; 
     for (var img_data in targets) {
         if (object.hasOwnProperty(img_data)) {
             let needle = new Image(img_data.asset);
             let mask = new Image(img_data.mask);
             let thresh = img_data.score;
             let lim = img_data.limit;
-            let matches = Vision.findMaskedMatches(haystack, needle, mask, thresh);
+            var matches = Vision.findMaskedMatches(haystack, needle, mask, thresh, lim);
+        }
+        if (matches) {
             if (adv.take_names == "pics_mark") {
+                var flag_foes = Vision.markMatches(haystack, matches, mk_color, mk_px);
+                let mk_color = new Color(scrn.rect_color);
+                let mk_px = scrn.rect_pix;
+                let date_time = new Date().toISOString();
+                let loca = path(date_time, "mugshots");
+                flag_foes.saveImage(loca);
+                Helper.log(`Saved matches to ${loca}`);
+            } else {
+                Helper.log("Match made but no record kept");
+            }
+        } else {
+            continue;
+        }
+            /*if (adv.take_names == "pics_mark") {
                 let mk_color = new Color(scrn.rect_color);
                 let mk_px = scrn.rect_pix;
                 let flag_foes = Vision.markMatches(haystack, matches, mk_color, mk_px);
-                flag_foes.saveImage("Mugshots/")
+                let date_time = new Date().toISOString();
+                flag_foes.saveImage(path(date_time, "mugshots"));
             }
-        }
+        }*/
     }
-    return signals;
+    return matches;
 }
 
-function 
+function path(insert, folder = "assets") {
+    return `${folder}/${insert}.png`;
+}
 
 
 
