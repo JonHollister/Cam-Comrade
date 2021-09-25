@@ -123,15 +123,15 @@ class Interaction {
         this.p1 = tapPoint;
         this.p2 = swipePoint;
         this.pause = ( (Math.random() * 17) + 100 );
-        this.dur = ( (Math.random() * 300) + 200 );
      }
      
      exec() {
          Helper.msleep(this.pause);
          if (this.p2) {
-             Android.swndSwipe(this.p1, this.p2, this.dur);
+            this.dur = ( (Math.random() * 300) + 200 );
+            Android.swndSwipe(this.p1, this.p2, this.dur);
          } else {
-             Android.sendTap(this.p1);
+            Android.sendTap(this.p1);
          }
      }
 }
@@ -144,6 +144,11 @@ class Scan {
         this.score = obj.score;
         this.matches = Vision.findMaskedMatches;
     }
+    
+    narrowband() {
+        for 
+    }
+    
 }
 
 class Asset {
@@ -306,4 +311,6 @@ function setInteract(spotsIn, sleepCoef) {
     Android.sendTap(spot); //tap spot. Spot is a random point in the Match's screen Rect with random delay before tapping to 'humanize' the outputs
 }
 
-
+function scan(assetObj = assetList) {
+    
+}
