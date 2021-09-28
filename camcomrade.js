@@ -128,8 +128,8 @@ class Interaction {
      exec() {
          Helper.msleep(this.pause);
          if (this.p2) {
-            this.dur = ( (Math.random() * 300) + 200 );
-            Android.swndSwipe(this.p1, this.p2, this.dur);
+            let dur = ( (Math.random() * 300) + 200 );
+            Android.swndSwipe(this.p1, this.p2, dur);
          } else {
             Android.sendTap(this.p1);
          }
@@ -137,16 +137,16 @@ class Interaction {
 }
 
 class Scan {
-    constructor(obj, markMatches) {
+    constructor(obj, markMatches, state) {
         this.shot = Android.takeScreenshot();
         this.tgt = new Image(path(obj.asset));
         this.mask = new Image(path(obj.mask,,true));
         this.score = obj.score;
-        this.matches = Vision.findMaskedMatches;
+        this.matches = Vision.findMaskedMatches(this.shot, this.tgt, this.mask);
     }
     
     narrowband() {
-        for 
+        for (const
     }
     
 }
